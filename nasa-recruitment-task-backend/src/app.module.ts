@@ -1,9 +1,10 @@
-import {  Module } from '@nestjs/common';
+import { Module } from '@nestjs/common';
 
 import { WeatherModule } from './weather/weather.module';
 import { MongooseModule } from '@nestjs/mongoose';
 import { ConfigModule } from '@nestjs/config';
 import { ScheduleModule } from '@nestjs/schedule';
+import { ApodModule } from './apod/apod.module';
 
 @Module({
   imports: [
@@ -14,6 +15,7 @@ import { ScheduleModule } from '@nestjs/schedule';
       isGlobal: true,
     }),
     MongooseModule.forRoot('mongodb://localhost/nasa'),
+    ApodModule,
   ],
 })
 export class AppModule {}

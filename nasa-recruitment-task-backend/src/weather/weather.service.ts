@@ -2,22 +2,18 @@ import {
   BadRequestException,
   HttpService,
   Injectable,
-  InternalServerErrorException,
   Logger,
 } from '@nestjs/common';
-import { ConfigService } from '@nestjs/config';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Weather } from './weather.model';
-import { WeatherDto } from './dto/weather.dto';
-import { Cron, Timeout } from "@nestjs/schedule";
+import { Cron, Timeout } from '@nestjs/schedule';
 
 @Injectable()
 export class WeatherService {
   private readonly logger = new Logger(WeatherService.name);
 
   constructor(
-    private readonly configService: ConfigService,
     private readonly httpService: HttpService,
     @InjectModel('Weather') private readonly weatherModel: Model<Weather>,
   ) {}
@@ -30,9 +26,8 @@ export class WeatherService {
   @Timeout(10000)
   async loadWeather(): Promise<void> {
     this.logger.debug(`Loading mars weather`);
-    // const nasakey = this.configService.get<string>('NASA_KEY');
     await this.httpService
-      .get<WeatherDto[]>(
+      .get(
         'https://mars.nasa.gov/rss/api/?feed=weather&category=mars2020&feedtype=json',
       )
       .toPromise()
@@ -44,9 +39,9 @@ export class WeatherService {
       });
   }
 
-  private saveWeather(data: WeatherDto[]): void {
+  private saveWeather(data: Weather[]): void {
     this.logger.debug(`Trying to save loaded data`);
-    data.forEach(async (p: WeatherDto) => {
+    data.forEach(async (p: Weather) => {
       if (!(await this.checkIfExistsByDate(p))) {
         const weatherModel = new this.weatherModel(p);
         this.logger.debug(`Trying to save weather model: ${JSON.stringify(p)}`);
@@ -57,7 +52,7 @@ export class WeatherService {
     });
   }
 
-  private async checkIfExistsByDate(p: WeatherDto): Promise<boolean> {
+  private async checkIfExistsByDate(p: Weather): Promise<boolean> {
     return await this.weatherModel.exists({
       terrestrial_date: p.terrestrial_date,
     });
