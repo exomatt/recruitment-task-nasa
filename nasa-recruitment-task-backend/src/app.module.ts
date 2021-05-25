@@ -5,6 +5,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { ConfigModule } from '@nestjs/config';
 import { ScheduleModule } from '@nestjs/schedule';
 import { ApodModule } from './apod/apod.module';
+import { PictureModule } from './picture/picture.module';
 
 @Module({
   imports: [
@@ -16,6 +17,7 @@ import { ApodModule } from './apod/apod.module';
     }),
     MongooseModule.forRoot('mongodb://localhost/nasa'),
     ApodModule,
+    PictureModule,
   ],
 })
 export class AppModule {}
