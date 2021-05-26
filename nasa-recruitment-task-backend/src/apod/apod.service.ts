@@ -31,7 +31,7 @@ export class ApodService {
     }
   }
 
-  async loadPhoto(date: string): Promise<Apod> {
+  private async loadPhoto(date: string): Promise<Apod> {
     this.logger.debug(`Fetch apod for date: ${date}`);
     const nasaKey = this.configService.get<string>('NASA_KEY');
     return await this.httpService
@@ -76,9 +76,12 @@ export class ApodService {
 
   @Cron('20 * * * * *')
   private async loadCurrentDayApod(): Promise<void> {
-    this.logger.debug(`Loading apod`);
     const today = new Date();
-    if (!(await this.checkIfExistsByDate(today))) {
+    if (
+      !(await this.checkIfExistsByDate(
+        new Date(today.toISOString().split('T')[0]),
+      ))
+    ) {
       await this.loadPhoto(today.toISOString().split('T')[0]);
     }
   }
