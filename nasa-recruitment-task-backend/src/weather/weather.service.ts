@@ -18,8 +18,14 @@ export class WeatherService {
     @InjectModel('Weather') private readonly weatherModel: Model<Weather>,
   ) {}
 
-  async getWeather(): Promise<Weather[]> {
-    return await this.weatherModel.find().exec();
+  async getWeather(date: Date): Promise<Weather> {
+    if (date) {
+      return await this.weatherModel.findOne({ terrestrial_date: date }).exec();
+    } else {
+      return await this.weatherModel
+        .findOne({}, {}, { sort: { terrestrial_date: -1 } })
+        .exec();
+    }
   }
 
   @Cron('20 * * * * *')
