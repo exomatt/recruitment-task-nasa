@@ -10,8 +10,4 @@ export class WeatherController {
   async findAll(): Promise<Weather[]> {
     return await this.weatherService.getWeather();
   }
-  @Get('/init')
-  async init(): Promise<void> {
-    await this.weatherService.loadWeather();
-  }
 }
