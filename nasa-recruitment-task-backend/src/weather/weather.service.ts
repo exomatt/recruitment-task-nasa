@@ -3,6 +3,7 @@ import {
   HttpService,
   Injectable,
   Logger,
+  NotFoundException,
 } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
@@ -20,12 +21,40 @@ export class WeatherService {
 
   async getWeather(date: Date): Promise<Weather> {
     if (date) {
-      return await this.weatherModel.findOne({ terrestrial_date: date }).exec();
+      return this.getWeatherByDate(date);
     } else {
-      return await this.weatherModel
-        .findOne({}, {}, { sort: { terrestrial_date: -1 } })
-        .exec();
+      return this.getWeatherLatest();
     }
+  }
+
+  async getWeatherByDate(date: Date): Promise<Weather> {
+    return await this.weatherModel
+      .findOne({ terrestrial_date: date })
+      .exec()
+      .then((find) => {
+        if (!find) {
+          throw new NotFoundException(`Could not found data for date: ${date}`);
+        }
+        return find;
+      })
+      .catch(() => {
+        throw new NotFoundException(`Could not found data for date: ${date}`);
+      });
+  }
+
+  async getWeatherLatest(): Promise<Weather> {
+    return await this.weatherModel
+      .findOne({}, {}, { sort: { terrestrial_date: -1 } })
+      .exec()
+      .then((find) => {
+        if (!find) {
+          throw new NotFoundException(`Could not found latest weather info.`);
+        }
+        return find;
+      })
+      .catch(() => {
+        throw new NotFoundException(`Could not found latest weather info.`);
+      });
   }
 
   @Cron('20 * * * * *')
