@@ -8,7 +8,7 @@ import { PictureFilterDto } from './dto/pictureFilter.dto';
 import { ConfigService } from '@nestjs/config';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { CameraName, Picture, RoverName } from "./picture.model";
+import { CameraName, Picture, RoverName } from './picture.model';
 import { PictureDto } from './dto/picture.dto';
 import { Cron } from '@nestjs/schedule';
 
@@ -45,12 +45,8 @@ export class PictureService {
         return pictures;
       }
     } else {
-      this.logger.error(
-        `Could not fetch data from picture NASA api without filter`,
-      );
-      throw new BadRequestException(
-        `Could not fetch data from picture NASA api without filter`,
-      );
+      this.logger.debug('Return pictures from DB');
+      return await this.getByFilter(pictureFilters);
     }
   }
 

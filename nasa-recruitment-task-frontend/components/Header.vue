@@ -5,6 +5,7 @@
       <b-navbar-nav>
         <b-nav-item href="/">Home</b-nav-item>
         <b-nav-item href="/apod">Astronomy Picture of the Day</b-nav-item>
+        <b-nav-item href="/picture">Mars Photos</b-nav-item>
       </b-navbar-nav>
     </b-navbar>
   </div>

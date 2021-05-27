@@ -29,7 +29,6 @@
 </template>
 
 <script>
-import {getWeather} from "../api/weather";
 import {getApod} from "../api/apod";
 
 export default {
