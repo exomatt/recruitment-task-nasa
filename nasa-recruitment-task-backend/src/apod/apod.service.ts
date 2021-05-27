@@ -21,12 +21,16 @@ export class ApodService {
   ) {}
 
   async getPicture(date: Date): Promise<Apod> {
+    if (date == null) {
+      date = new Date(new Date().toISOString().split('T')[0]);
+    }
     const apod = await this.getByDate(date);
     if (apod != null) {
       this.logger.debug('Return apod from DB');
       return apod;
     } else {
       this.logger.debug('Load apod from nasa api');
+      date = new Date(date);
       return this.loadPhoto(date.toISOString().split('T')[0]);
     }
   }

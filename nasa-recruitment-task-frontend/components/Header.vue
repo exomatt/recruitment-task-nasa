@@ -1,9 +1,10 @@
 <template>
   <div >
     <b-navbar class="navbar"  type="dark" variant="dark">
-      <b-navbar-brand href="#">NavBar</b-navbar-brand>
+      <b-navbar-brand href="/">Nasa Data</b-navbar-brand>
       <b-navbar-nav>
-        <b-nav-item href="#">Home</b-nav-item>
+        <b-nav-item href="/">Home</b-nav-item>
+        <b-nav-item href="/apod">Astronomy Picture of the Day</b-nav-item>
       </b-navbar-nav>
     </b-navbar>
   </div>
@@ -19,6 +20,7 @@ export default {
 .navbar {
   min-width: 100%;
   max-width: 100%;
-  margin: auto;
+  margin-left: auto;
+  margin-right: 0px;
 }
 </style>

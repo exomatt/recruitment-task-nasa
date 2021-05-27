@@ -44,6 +44,13 @@ export class PictureService {
         }
         return pictures;
       }
+    } else {
+      this.logger.error(
+        `Could not fetch data from picture NASA api without filter`,
+      );
+      throw new BadRequestException(
+        `Could not fetch data from picture NASA api without filter`,
+      );
     }
   }
 

@@ -1,10 +1,9 @@
 <template>
-  <div class="container">
-    <Header/>
-    <h2 v-if="weather">{{ weather.terrestrial_date }}</h2>
-    <button v-on:click="fetch">Refresh</button>
-    <Weather/>
-  </div>
+    <div class="row justify-content-center">
+      <div class="card-container">
+        <Weather/>
+      </div>
+    </div>
 </template>
 
 <script>
@@ -37,7 +36,14 @@ export default {
   left: 0;
   min-width: 100%;
   height: 100%;
-  overflow: auto !important;
+  overflow: hidden !important;
   overflow-y: scroll !important;
+}
+
+.card-container {
+  max-width: 50%;
+  min-width: 30%;
+  margin-top: 15px;
+  margin-bottom: 150px;
 }
 </style>
