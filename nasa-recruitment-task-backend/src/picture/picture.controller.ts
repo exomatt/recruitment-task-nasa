@@ -20,4 +20,14 @@ export class PictureController {
   ): Promise<Picture[]> {
     return await this.pictureService.getPicture(pictureFilters);
   }
+
+  @Get('/roverNames')
+  async getRoverNames() {
+    return await this.pictureService.getRoverNames();
+  }
+
+  @Get('/cameraNames')
+  async getCameraNames() {
+    return await this.pictureService.getCameraNames();
+  }
 }

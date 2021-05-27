@@ -8,7 +8,7 @@ import { PictureFilterDto } from './dto/pictureFilter.dto';
 import { ConfigService } from '@nestjs/config';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { Picture, RoverName } from './picture.model';
+import { CameraName, Picture, RoverName } from "./picture.model";
 import { PictureDto } from './dto/picture.dto';
 import { Cron } from '@nestjs/schedule';
 
@@ -142,5 +142,13 @@ export class PictureService {
         this.logger.error('Problem with saving picture ', err);
         throw new BadRequestException('Problem with saving picture');
       });
+  }
+
+  async getRoverNames() {
+    return Object.keys(RoverName);
+  }
+
+  async getCameraNames() {
+    return Object.keys(CameraName);
   }
 }
