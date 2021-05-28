@@ -12,7 +12,6 @@ export class DateValidationPipe implements PipeTransform {
   transform(value: Date, metadata: ArgumentMetadata) {
     this.logger.debug(`Validate date ${value} in request query param.`);
     if (value == null) {
-      console.log("jestem")
       return value;
     }
     const queryDate = new Date(value);
