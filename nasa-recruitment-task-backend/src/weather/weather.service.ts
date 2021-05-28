@@ -57,8 +57,13 @@ export class WeatherService {
       });
   }
 
-  @Cron('0 17 12 * * *')
   @Timeout(10000)
+  async loadOnStartup(): Promise<void> {
+    this.logger.debug('Load on startup');
+    await this.loadWeather();
+  }
+
+  @Cron('0 17 12 * * *')
   async loadWeather(): Promise<void> {
     this.logger.debug(`Loading mars weather`);
     await this.httpService
