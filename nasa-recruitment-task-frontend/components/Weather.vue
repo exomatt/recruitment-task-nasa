@@ -35,17 +35,17 @@ export default {
     return {
       weather: {},
       max: maxDate,
-      dateValue: new Date()
+      dateValue: new Date().toISOString().split('T')[0],
     }
   },
   async fetch() {
     this.weather = await getWeather()
     if(this.weather)
-      this.dateValue = new Date(this.weather.terrestrial_date)
+      this.dateValue = new Date(this.weather.terrestrial_date).toISOString().split('T')[0]
   },
   methods: {
     async onContext(ctx) {
-      this.weather = await getWeather(this.dateValue);
+      this.weather = await getWeather(new Date(this.dateValue));
     }
   }
 }

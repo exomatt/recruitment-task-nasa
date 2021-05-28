@@ -11,7 +11,9 @@
             <b-card-img @click="openImage" class="w-75" :src="this.picture.url"></b-card-img>
           </div>
           <div v-if="picture.media_type==='video'">
-            <figure class="w-75"><iframe width="800" height="500" :src="this.picture.url"></iframe></figure>
+            <figure class="w-75">
+              <iframe width="800" height="500" :src="this.picture.url"></iframe>
+            </figure>
           </div>
         </div>
         <div v-if="!picture">
@@ -40,7 +42,7 @@ export default {
     return {
       picture: {},
       max: maxDate,
-      dateValue: new Date()
+      dateValue: new Date().toISOString().split('T')[0]
     }
   },
   async fetch() {
@@ -50,10 +52,10 @@ export default {
   },
   methods: {
     async onContext(ctx) {
-      this.picture = await getApod(this.dateValue);
+      this.picture = await getApod(new Date(this.dateValue));
     },
-    openImage(){
-      if(this.picture.hdurl)
+    openImage() {
+      if (this.picture.hdurl)
         window.open(this.picture.hdurl, '_blank');
     }
   }

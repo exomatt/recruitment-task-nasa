@@ -1,6 +1,6 @@
 <template>
   <b-card class="row">
-    <b-card-title>Astronomy Picture of the Day</b-card-title>
+    <b-card-title>Mars Photos</b-card-title>
     <div class="row">
 
       <div class="col-xs-6 mr-5 mt-5 ml-4 text-left">
