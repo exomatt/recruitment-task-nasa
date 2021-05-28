@@ -78,7 +78,7 @@ export class ApodService {
       });
   }
 
-  @Cron('20 * * * * *')
+  @Cron('0 17 12 * * *')
   private async loadCurrentDayApod(): Promise<void> {
     const today = new Date();
     if (

@@ -50,7 +50,7 @@ export class PictureService {
     }
   }
 
-  @Cron('20 * * * * *')
+  @Cron('0 17 12 * * *')
   private async loadCurrentDayApod(): Promise<void> {
     const today = new Date();
     this.logger.debug(`Cron fetch picture for date: ${today}`);
